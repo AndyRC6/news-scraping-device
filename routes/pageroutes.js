@@ -1,12 +1,6 @@
-var mongoose = require("mongoose");
-var loginauth = require("../middleware/loginauth");
-var db = require("../models");
 
 
-mongoose.connect('mongodb://heroku_0vg7r2nr:fdqb2sr9c9vc9bd4uc92afrqg@ds123728.mlab.com:23728/heroku_0vg7r2nr');
-mongoose.Promise = Promise;
-
-module.exports = function(app){
+module.exports = function(app, db, loginauth){
 
     app.get("/", function(req, res){
         res.render("login");
