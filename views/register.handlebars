@@ -5,13 +5,19 @@
         <div id="log-in-column" class="col-md-4 col-md-offset-4">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    LogIn
+                    Register
                 </div>
                 <div class="panel-body">
                     
-                    <form action="/login" method="POST" role="form">
+                    <form action="/register" method="POST" role="form">
                     
                         <div class="form-group">
+                            <label for="">First Name</label>
+                            <input type="text" class="form-control" id="firstName-field" name="firstName">
+
+                            <label for="">Last Name</label>
+                            <input type="text" class="form-control" id="lastName-field" name="lastName">
+
                             <label for="">Email</label>
                             <input type="text" class="form-control" id="email-field" name="email">
 
@@ -23,22 +29,13 @@
                             <div class="col-md-8">
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
-                            <div class="col-md-4">
-                                <a href="/register">New User? Register</a>
-                            </div>
+                            {{!-- <div class="col-md-4">
+                                <a href="/">Back to Log In</a>
+                            </div> --}}
                         </div>
                     
                     </form>
-                    {{#if error400}}
-                        <div class="alert alert-danger">
-                            <p>{{error400}}</p>
-                        </div>
-                    {{/if}}
-                    {{#if error401}}
-                        <div class="alert alert-danger">
-                            <p>{{error401}}</p>
-                        </div>
-                    {{/if}}
+                    
                 </div>
             </div>
         </div>
