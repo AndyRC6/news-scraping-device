@@ -1,1 +1,45 @@
-<h1>Hello! {{firstName}}</h1>
+<link rel="stylesheet" href="assets/css/home.css">
+<script src="assets/scripts/home.js"></script>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-warning center-block" id="scrape-btn">Click here to scrape the latest news articles</button>
+            <p class="text-center">(duplicate articles will not be scraped)</p>
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-md-8" id="article-container">
+            {{#each articles}}
+                <div class="article-div" data-article-id="{{_id}}">
+                    <h3>{{headline}}</h3>
+                    <p>{{summary}}</p>
+                    <a href="{{url}}" target="_blank">Click here to see the article</a>
+                </div>
+                <hr/>
+            {{/each}}
+        </div>
+        <div class="col-md-4" id="comment-container">
+
+            
+            <form action="/comment" method="POST" role="form">
+            
+                <div class="form-group">
+                    <label for="">Comment</label>
+                    <textarea type="text" class="form-control" id="comment-field" name="comment"></textarea>
+
+                    <input type="hidden" name="articleId" id="form-article-id" value="">
+
+                    <br />
+                    <button type="submit" class="btn btn-primary" id="submit-comment-btn">Submit</button>
+                </div>
+            
+                
+            
+                
+            </form>
+            
+        </div>
+    </div>
+</div>
