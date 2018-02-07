@@ -7,6 +7,9 @@ var CommentSchema = new Schema({
     text: {
         type:String,
         required:true
+    },
+    user: {
+        type: Schema.Types.ObjectId
     }    
 
 })

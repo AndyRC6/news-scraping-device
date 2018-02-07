@@ -46,8 +46,44 @@ module.exports = function(app, db, loginauth){
         db.User
         .create(req.body)
         .then(function(newuser){
-            res.json(newuser);
+            res.render("login", {registerSuccess: "User Created Successfully!"});
         })
+    })
+
+    app.get("/removecomments", loginauth, function(req, res){
+      db.Comment.find({user: req.session.userId})
+      .then(function(docs){
+        for(i = 0; i < docs.length; i++)
+        {
+          docs[i].remove();
+        }
+        res.redirect("/home")
+      })
+    })
+
+    app.get("/getcomments/:articleId", loginauth, function(req, res){
+      var articleId = req.params.articleId;
+      db.Article.findById(articleId)
+      .populate({
+        path:'comments',
+        populate: {
+          path: 'user',
+          model: 'User'
+        }
+      })
+      .then(function(data){
+        var commentArray = [];
+        for(i = 0; i < data.comments.length; i++)
+        {
+          var newcom = {
+            comment: data.comments[i].text,
+            user: data.comments[i].user.firstName
+          }
+          commentArray.push(newcom);
+        } 
+        res.json(commentArray);
+      })
+
     })
 
     app.post("/login", function(req, res){
@@ -98,20 +134,19 @@ module.exports = function(app, db, loginauth){
 
       app.post("/comment", loginauth, function(req, res){
         var userId = req.session.userId;
-        var comment = req.body.comment;
+        var comment = {
+          text: req.body.comment,
+          user: userId
+        }
         var articleId = req.body.articleId;
         var commentId = "";
 
         db.Comment.create(comment)
-        .then(function(err, comment){
-          commentId = comment._id;
-          return db.User.findOneAndUpdate({_id: userId}, { $push: { comments: comment._id } }, { new: true });
-        }).then(function(user){
-          return db.Article.findOneAndUpdate({_id: articleId}, { $push: { comments: mongoose.Types.ObjectId(commentId) } }, { new: true });
-        }).then(function(article){
-          return res.redirect("/home");
+        .then(function(newcomment){
+          return db.Article.findByIdAndUpdate(articleId, { $push: { comments: newcomment._id } }, { new: true });
+        }).then(function(newArticle){
+          res.redirect("/home");
         })
-        
       })
 
 }

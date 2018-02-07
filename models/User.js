@@ -21,11 +21,7 @@ var UserSchema = new Schema({
     password: {
         type: String,
         required: true
-    },
-    comments: [{
-        type: Schema.Types.ObjectId,
-        ref: "Comment"
-    }]
+    }
 
 })
 

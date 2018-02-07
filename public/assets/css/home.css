@@ -1,9 +1,17 @@
 body{
-    background-color: slategray;
+    background-color: slategrey;
 }
 #scrape-btn{
     width:100%
 }
 .article-div{
     cursor:pointer;
+}
+#comment-container{
+    background-color:white;
+    padding:10px;
+}
+.article-div:hover{
+    background-color:grey !important;
+    color:white !important;
 }
